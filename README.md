@@ -13,6 +13,8 @@
 
 [![Join Chat][gitter-svg]][gitter-link]
 
+A bugfix (issue: https://github.com/ParsePlatform/Parse-SDK-iOS-OSX/issues/1006) waiting for an official release
+
 A library that gives you access to the powerful Parse cloud platform from your iOS or OS X app.
 For more information Parse and its features, see [the website][parse.com] and [getting started][docs].
 
