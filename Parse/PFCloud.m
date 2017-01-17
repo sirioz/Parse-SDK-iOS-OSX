@@ -22,7 +22,7 @@
 #pragma mark - Public
 ///--------------------------------------
 
-+ (BFTask *)callFunctionInBackground:(NSString *)functionName withParameters:(NSDictionary *)parameters {
++ (BFTask *)callFunctionInBackground:(NSString *)functionName withParameters:(NSDictionary *)parameters withHeaders:(NSDictionary*)headers {
     return [[PFUser _getCurrentUserSessionTokenAsync] continueWithBlock:^id(BFTask *task) {
         NSString *sessionToken = task.result;
         PFCloudCodeController *controller = [Parse _currentManager].coreManager.cloudCodeController;
@@ -32,10 +32,23 @@
     }];
 }
 
++ (BFTask *)callFunctionInBackground:(NSString *)functionName withParameters:(NSDictionary *)parameters
+{
+    return [self callFunctionInBackground:functionName withParameters:parameters withHeaders:nil];
+}
+
++ (void)callFunctionInBackground:(NSString *)function
+                  withParameters:(NSDictionary *)parameters
+                     withHeaders:(NSDictionary *)headers
+                           block:(PFIdResultBlock)block {
+    [[self callFunctionInBackground:function withParameters:parameters withHeaders:headers] thenCallBackOnMainThreadAsync:block];
+}
+
+
 + (void)callFunctionInBackground:(NSString *)function
                   withParameters:(NSDictionary *)parameters
                            block:(PFIdResultBlock)block {
-    [[self callFunctionInBackground:function withParameters:parameters] thenCallBackOnMainThreadAsync:block];
+    [self callFunctionInBackground:function withParameters:parameters withHeaders:nil block:block];
 }
 
 @end

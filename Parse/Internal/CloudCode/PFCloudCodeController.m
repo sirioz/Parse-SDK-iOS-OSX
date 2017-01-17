@@ -43,6 +43,7 @@
 
 - (BFTask *)callCloudCodeFunctionAsync:(NSString *)functionName
                         withParameters:(NSDictionary *)parameters
+                           withHeaders:(NSDictionary *)headers
                           sessionToken:(NSString *)sessionToken {
     @weakify(self);
     return [[[BFTask taskFromExecutor:[BFExecutor defaultPriorityBackgroundExecutor] withBlock:^id{
@@ -51,12 +52,21 @@
         PFRESTCloudCommand *command = [PFRESTCloudCommand commandForFunction:functionName
                                                               withParameters:encodedParameters
                                                                 sessionToken:sessionToken];
+        command.additionalRequestHeaders = headers;
+        
         return [self.dataSource.commandRunner runCommandAsync:command withOptions:PFCommandRunningOptionRetryIfFailed];
     }] continueWithSuccessBlock:^id(BFTask *task) {
         return ((PFCommandResult *)(task.result)).result[@"result"];
     }] continueWithSuccessBlock:^id(BFTask *task) {
         return [[PFDecoder objectDecoder] decodeObject:task.result];
     }];
+}
+
+- (BFTask *)callCloudCodeFunctionAsync:(NSString *)functionName
+                        withParameters:(NSDictionary *)parameters
+                          sessionToken:(NSString *)sessionToken {
+    
+    return [self callCloudCodeFunctionAsync:functionName withParameters:parameters withHeaders:nil sessionToken:sessionToken];
 }
 
 @end

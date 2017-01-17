@@ -42,6 +42,13 @@
 
  @return `BFTask` with a result set to a result of Cloud Function.
  */
+
+- (BFTask *)callCloudCodeFunctionAsync:(NSString *)functionName
+                        withParameters:(NSDictionary *)parameters
+                           withHeaders:(NSDictionary *)headers
+                          sessionToken:(NSString *)sessionToken;
+
+
 - (BFTask *)callCloudCodeFunctionAsync:(NSString *)functionName
                         withParameters:(NSDictionary *)parameters
                           sessionToken:(NSString *)sessionToken;

@@ -30,6 +30,9 @@ NS_ASSUME_NONNULL_BEGIN
  */
 + (BFTask<id> *)callFunctionInBackground:(NSString *)function
                           withParameters:(nullable NSDictionary *)parameters;
++ (BFTask<id> *)callFunctionInBackground:(NSString *)function
+                          withParameters:(nullable NSDictionary *)parameters
+                            withHeaders:(nullable NSDictionary*)headers;
 
 /**
  Calls the given cloud function *asynchronously* with the parameters provided
@@ -42,6 +45,7 @@ NS_ASSUME_NONNULL_BEGIN
  */
 + (void)callFunctionInBackground:(NSString *)function
                   withParameters:(nullable NSDictionary *)parameters
+withHeaders:(nullable NSDictionary*)headers
                            block:(nullable PFIdResultBlock)block;
 
 @end
