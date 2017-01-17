@@ -28,6 +28,7 @@
         PFCloudCodeController *controller = [Parse _currentManager].coreManager.cloudCodeController;
         return [controller callCloudCodeFunctionAsync:functionName
                                        withParameters:parameters
+                                          withHeaders:headers
                                          sessionToken:sessionToken];
     }];
 }
